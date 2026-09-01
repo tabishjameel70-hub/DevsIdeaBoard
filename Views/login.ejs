@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In | Developer Idea Board</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 min-h-screen flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 font-sans text-gray-200">
+
+    <div class="sm:mx-auto sm:w-full sm:max-w-md">
+        <h2 class="text-center text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            <span class="text-indigo-500">&lt;/&gt;</span> Welcome Back
+        </h2>
+        <p class="mt-2 text-center text-xs sm:text-sm text-gray-400">
+            Authenticate to pitch ideas or upvote projects.
+        </p>
+    </div>
+
+    <div class="mt-6 sm:mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div class="bg-gray-800 py-6 px-5 sm:py-8 sm:px-10 shadow-2xl rounded-2xl border border-gray-700/80">
+            <form action="/login" method="POST" class="space-y-5 sm:space-y-6">
+                
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-300">Email Address</label>
+                    <div class="mt-1.5">
+                        <input id="email" name="email" type="email" required placeholder="dev@example.com"
+                            class="appearance-none block w-full px-3.5 py-2.5 h-11 border border-gray-600 rounded-lg shadow-sm placeholder-gray-500 bg-gray-700/70 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition duration-150">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-300">Password</label>
+                    <div class="mt-1.5">
+                        <input id="password" name="password" type="password" required placeholder="••••••••"
+                            class="appearance-none block w-full px-3.5 py-2.5 h-11 border border-gray-600 rounded-lg shadow-sm placeholder-gray-500 bg-gray-700/70 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition duration-150">
+                    </div>
+                </div>
+
+                <div>
+                    <button type="submit" 
+                        class="w-full flex justify-center items-center h-11 px-4 border border-transparent rounded-lg shadow-sm text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500 active:scale-[0.98] transition-all duration-150">
+                        Authenticate
+                    </button>
+                </div>
+            </form>
+
+            <div class="mt-6 text-center">
+                <p class="text-xs sm:text-sm text-gray-400">
+                    Don't have an account? 
+                    <a href="/signup" class="font-medium text-indigo-400 hover:text-indigo-300 transition duration-150 underline-offset-2 hover:underline">Initialize Account</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
