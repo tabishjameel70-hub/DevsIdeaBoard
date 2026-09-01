@@ -158,21 +158,28 @@ app.get('/feed', async (req, res) => {
 })
 app.get('/like/:id', isLoggined, async (req, res) => {
     try {
-        const post = await postModel.findOne({ _id: req.params.id }).populate('user');
+        // 1. Find the current logged-in user from the database using the email in the token
+        const currentUser = await userModel.findOne({ email: req.user.email });
         
-        // Check if user has already liked the post
-        if (post.likes.indexOf(req.user.userid) === -1) {
+        if (!currentUser) return res.status(404).send('User not found');
+
+        // 2. Find the post
+        const post = await postModel.findOne({ _id: req.params.id });
+        
+        // 3. Check if the user's _id is already in the likes array
+        // We use .indexOf() but since MongoDB IDs are objects, it's safer to convert them to strings or use .includes
+        if (post.likes.indexOf(currentUser._id) === -1) {
             // Like: Add user ID to the array
-            post.likes.push(req.user.userid);
+            post.likes.push(currentUser._id);
         } else {
             // Unlike: Remove user ID from the array
-            post.likes.splice(post.likes.indexOf(req.user.userid), 1);
+            post.likes.splice(post.likes.indexOf(currentUser._id), 1);
         }
 
         // Must await the save operation
         await post.save();
         
-        // Redirect back to the page the user was just on
+        // Redirect back to home
         res.redirect('/home');
     } catch (error) {
         console.error(error);
