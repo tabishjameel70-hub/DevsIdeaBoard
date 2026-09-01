@@ -2,17 +2,26 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const jwt = require('jsonwebtoken');
-const userModel = require('./models/user');
-const postModel = require('./models/post');
-const JWT = '123erwvdghlkyrtadeg##########jfrge478945645';
 const bcrypt = require('bcrypt');
 const cookieParser = require('cookie-parser');
+const fs = require('fs');
+
+const userModel = require('./models/user');
+const postModel = require('./models/post');
+
+const JWT = '123erwvdghlkyrtadeg##########jfrge478945645';
+
+// Middleware
 app.use(cookieParser());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
+
+// Serve static assets from 'public' (CSS, JS, Images)
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Explicitly define view engine and views directory for serverless environments
 app.set('view engine', 'ejs');
-const fs = require('fs');
+app.set('views', path.join(__dirname, 'views'));
 
 app.get('/', isLoggined, (req, res) => {
     res.redirect('/home');
