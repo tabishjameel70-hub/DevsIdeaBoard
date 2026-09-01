@@ -4,7 +4,10 @@ const path = require('path');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const cookieParser = require('cookie-parser');
-const fs = require('fs');
+const mongoose = require('mongoose'); 
+
+// 1. Re-initialize Database Connection
+mongoose.connect(process.env.MONGODB_URI);
 
 const userModel = require('./models/user');
 const postModel = require('./models/post');
@@ -16,13 +19,10 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static assets from 'public' (CSS, JS, Images)
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Explicitly define view engine and views directory for serverless environments
+// 2. Fix Vercel Serverless Paths using process.cwd()
+app.use(express.static(path.join(process.cwd(), 'public')));
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-
+app.set('views', path.join(process.cwd(), 'views'));
 app.get('/', isLoggined, (req, res) => {
     res.redirect('/home');
 })
