@@ -180,3 +180,12 @@ function isLoggined(req, res, next) {
     }
 }
 app.listen(3000);
+// Run the active port ONLY in local development
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(3000, () => {
+        console.log("Server initialized on port 3000");
+    });
+}
+
+// Export the Express API for Vercel's serverless functions
+module.exports = app;
