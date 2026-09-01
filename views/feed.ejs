@@ -33,17 +33,12 @@
                                 <span class="font-medium text-zinc-300 truncate max-w-[150px] sm:max-w-xs">@<%= idea.user ? idea.user.username : 'Unknown' %></span>
                             </div>
                             
-                               <div class="flex flex-row sm:flex-col items-center sm:items-end justify-start gap-3 w-full sm:w-auto mt-2 sm:mt-0">
-                        <a href="/like/<%= post._id %>" class="w-full sm:w-auto justify-center group/btn bg-gradient-to-r from-indigo-500/10 to-purple-500/10 hover:from-indigo-500 hover:to-purple-500 border border-purple-500/30 hover:border-transparent text-purple-400 hover:text-white font-medium text-sm rounded-lg px-4 py-2 transition-all duration-300 flex items-center gap-2">
-                            <svg class="w-4 h-4 transition-transform group-hover/btn:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                            </svg>
-                            <%= post.likes.some(id=> id?.toString() === user?._id?.toString()) ? 'Unlike' : 'Like' %>
-                            <span class="flex items-center justify-center min-w-[20px] h-5 px-1.5 ml-1 rounded-md text-xs font-bold bg-purple-500/20 text-purple-300 group-hover/btn:bg-white/20 group-hover/btn:text-white transition-colors">
-                                <%= post.likes.length %>
+                            <span class="flex items-center gap-2 bg-indigo-500/10 text-indigo-300 px-4 py-1.5 rounded-full border border-indigo-500/20 shadow-[0_0_15px_rgba(99,102,241,0.05)] font-medium">
+                                <svg class="w-4 h-4 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                </svg>
+                                <%= idea.likes ? idea.likes.length : 0 %>
                             </span>
-                        </a>
-                    </div>
                         </div>
                     </div>
                 <% }) %>
