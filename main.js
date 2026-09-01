@@ -171,12 +171,15 @@ app.get('/like/:id', isLoggined, async (req, res) => {
     }
 });
 function isLoggined(req, res, next) {
-    if (req.cookies.token === '') {
-        res.render('login')
-    } else {
-        let data = jwt.verify(req.cookies.token, JWT);
-        req.user = data;
+    if (!req.cookies || !req.cookies.token) {
+        return res.redirect('/login'); 
+    }
+    try {
+        let decoded = jwt.verify(req.cookies.token, JWT); 
+        req.user = decoded;
         next();
+    } catch (err) {
+        res.redirect('/login');
     }
 }
 app.listen(3000);
