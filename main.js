@@ -22,7 +22,10 @@ app.get('/signup', async (req, res) => {
 })
 app.get('/home', isLoggined, async (req, res) => {
     let user = await userModel.findOne({ email: req.user.email }).populate('posts');
-    // 3. Render the home.ejs template and pass the user object
+    if (user.length === 0) {
+        res.cookie('token','');
+        res.redirect('/signup')
+    }
     res.render('home', { user });
 })
 app.post('/home', async (req, res) => {
@@ -105,17 +108,29 @@ app.post('/create', isLoggined, async (req, res) => {
     }
 })
 app.post('/post', isLoggined, async (req, res) => {
-    let user = await userModel.findOne({ email: req.user.email });
+
+    let user = await userModel.findOne({
+        email: req.user.email
+    });
+
+    if (!user) {
+        return res.status(404).send('User not found');
+    }
+
     let { content, heading } = req.body;
+
     let post = await postModel.create({
         user: user._id,
-        content: content,
-        heading,
-    })
+        heading: heading,
+        content: content
+    });
+
     user.posts.push(post._id);
+
     await user.save();
-    res.redirect('/home')
-})
+
+    res.redirect('/home');
+});
 app.get('/addpost', isLoggined, async (req, res) => {
     res.render('addpost')
 })
